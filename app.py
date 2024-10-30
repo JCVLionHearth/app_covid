@@ -5,6 +5,10 @@ from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.express as px
 
+import os
+
+
+
 # Lectura del archivo de datos
 data_path = 'datos/Anexo4.Covid-19_CE_15-03-23.xlsx'
 df = pd.read_excel(data_path, sheet_name='COVID-19')
@@ -16,6 +20,11 @@ df_2020_2021 = df[(df['FECHA DEFUNCIÓN'].dt.year.isin([2020, 2021])) & (df['COV
 #print("Resumen estadístico df 2021:\n", df_2021.describe())
 # Inicializar la aplicación Dash
 app = dash.Dash(__name__)
+server = app.server
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8050))
+    app.run_server(debug=True, host="0.0.0.0", port=port)
 
 # Layout de la aplicación en cuadrícula
 app.layout = html.Div([
@@ -141,3 +150,4 @@ if __name__ == "__main__":
     app.run_server(debug=True)
 
 # Elaborado por: Juan Vega, Maestría IA
+
